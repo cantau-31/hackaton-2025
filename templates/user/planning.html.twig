@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue {{ app.user.email }}</h1>
+
+    <p>Rôle : {{ app.user.roles[0] }}</p>
+
+    <ul>
+        <li><a href="{{ path('user_planning') }}">Voir Planning</a></li>
+        <li><a href="{{ path('user_fiche') }}">Fiche Personnel</a></li>
+        <li><a href="{{ path('user_chantiers') }}">Voir Chantiers</a></li>
+    </ul>
+{% endblock %}

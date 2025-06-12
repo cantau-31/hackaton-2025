@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin - Chantiers{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Liste des chantiers</h1>
+
+    {% if chantiers is empty %}
+        <div class="alert alert-info">Aucun chantier enregistré.</div>
+    {% else %}
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chantier in chantiers %}
+                    <tr>
+                        <td>{{ chantier.id }}</td>
+                        <td>{{ chantier.nom }}</td>
+                        <td>{{ chantier.adresse }}</td>
+                        <td>{{ chantier.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

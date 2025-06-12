@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Bienvenue sur votre espace</h1>
+
+    <div class="row g-4">
+        <!-- Fiche Personnel -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ma fiche personnel</h5>
+                    <p class="card-text">Voir vos informations personnelles</p>
+                    <a href="{{ path('user_fiche') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planning -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mon planning</h5>
+                    <p class="card-text">Voir vos horaires de travail</p>
+                    <a href="{{ path('user_planning') }}" class="btn btn-success">Accéder</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chantiers -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mes chantiers</h5>
+                    <p class="card-text">Consulter la liste des chantiers</p>
+                    <a href="{{ path('user_chantiers') }}" class="btn btn-warning">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Planning des chantiers</h1>
+
+    {% if plannings is empty %}
+        <div class="alert alert-info">Aucun planning disponible.</div>
+    {% else %}
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Chef de chantier</th>
+                    <th>Chantier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for planning in plannings %}
+                    <tr>
+                        <td>{{ planning.date|date('d/m/Y') }}</td>
+                        <td>{{ planning.heure|date('H:i') }}</td>
+                        <td>{{ planning.chefChantier }}</td>
+                        <td>{{ planning.chantier.nom }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

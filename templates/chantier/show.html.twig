@@ -1,0 +1,38 @@
+<h2>Localisation du chantier</h2>
+
+<div id="map" style="height: 400px; width: 100%;"></div>
+
+<p>Adresse : {{ chantier.adresse }}</p>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script>
+    const adresse = "{{ chantier.adresse|e('js') }}";
+    
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${adresse}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                const lat = data[0].lat;
+                const lon = data[0].lon;
+
+                const map = L.map('map').setView([lat, lon], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup("{{ chantier.nom|e('js') }}")
+                    .openPopup();
+            } else {
+                document.getElementById('map').innerHTML = "Adresse introuvable.";
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById('map').innerHTML = "Erreur de géolocalisation.";
+        });
+</script>

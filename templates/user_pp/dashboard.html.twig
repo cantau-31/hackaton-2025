@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace User++{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mon planning</h1>
+
+    {% if plannings is empty %}
+        <div class="alert alert-warning">Aucun planning à venir.</div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Chantier</th>
+                    <th>Chef de chantier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for planning in plannings %}
+                    <tr>
+                        <td>{{ planning.date|date('d/m/Y') }}</td>
+                        <td>{{ planning.heure|date('H:i') }}</td>
+                        <td>{{ planning.chantier.nom }}</td>
+                        <td>{{ planning.chefChantier }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <hr class="my-5">
+
+    <h2>Liste du personnel</h2>
+    <ul>
+        {% for personne in personnels %}
+            <li>{{ personne.nom }} – {{ personne.poste }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des personnels{% endblock %}
+
+{% block body %}
+    <h1>Liste des personnels</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Poste</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personnel in personnels %}
+            <tr>
+                <td>{{ personnel.id }}</td>
+                <td>{{ personnel.nom }}</td>
+                <td>{{ personnel.prenom }}</td>
+                <td>{{ personnel.poste }}</td>
+                <td>
+                    <a href="{{ path('app_personnel_show', {'id': personnel.id}) }}">Voir</a>
+                    <a href="{{ path('app_personnel_edit', {'id': personnel.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun personnel trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_personnel_new') }}" class="btn btn-primary mt-3">Ajouter un nouveau</a>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Tableau de bord Administrateur</h1>
+
+    <div class="row">
+
+        <!-- Plannings -->
+        <div class="col-md-4">
+            <h3>Derniers Plannings</h3>
+            <ul class="list-group mb-3">
+                {% for planning in plannings %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            {{ planning.date|date('d/m/Y') }} - {{ planning.heure|date('H:i') }}<br>
+                            <small>Chantier : {{ planning.chantier.nom }}</small>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_planning_edit', {'id': planning.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                            <form method="post" action="{{ path('app_planning_delete', {'id': planning.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer ce planning ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ planning.id) }}">
+                                <button class="btn btn-sm btn-danger">🗑️</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">Aucun planning</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('app_planning_new') }}" class="btn btn-success btn-sm">➕ Nouveau planning</a>
+            <a href="{{ path('app_planning_index') }}" class="btn btn-outline-primary btn-sm">Voir tous</a>
+        </div>
+
+        <!-- Personnels -->
+        <div class="col-md-4">
+            <h3>Derniers Personnels</h3>
+            <ul class="list-group mb-3">
+                {% for personnel in personnels %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            {{ personnel.nom }} {{ personnel.prenom }}<br>
+                            <small>Poste : {{ personnel.poste }}</small>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_personnel_edit', {'id': personnel.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                            <form method="post" action="{{ path('app_personnel_delete', {'id': personnel.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer ce personnel ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personnel.id) }}">
+                                <button class="btn btn-sm btn-danger">🗑️</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">Aucun personnel</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('app_personnel_new') }}" class="btn btn-success btn-sm">➕ Nouveau personnel</a>
+            <a href="{{ path('app_personnel_index') }}" class="btn btn-outline-primary btn-sm">Voir tous</a>
+        </div>
+
+        <!-- Chantiers -->
+        <div class="col-md-4">
+            <h3>Derniers Chantiers</h3>
+            <ul class="list-group mb-3">
+                {% for chantier in chantiers %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            {{ chantier.nom }}<br>
+                            <small>{{ chantier.adresse }}</small>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_chantier_edit', {'id': chantier.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                            <form method="post" action="{{ path('app_chantier_delete', {'id': chantier.id}) }}" style="display:inline;" onsubmit="return confirm('Supprimer ce chantier ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chantier.id) }}">
+                                <button class="btn btn-sm btn-danger">🗑️</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">Aucun chantier</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('app_chantier_new') }}" class="btn btn-success btn-sm">➕ Nouveau chantier</a>
+            <a href="{{ path('app_chantier_index') }}" class="btn btn-outline-primary btn-sm">Voir tous</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes chantiers{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mes chantiers</h1>
+
+    {% if chantiers_a_venir is empty and chantiers_passes is empty %}
+        <div class="alert alert-warning">Aucun chantier attribué pour le moment.</div>
+    {% endif %}
+
+    {% if chantiers_a_venir is not empty %}
+        <h2 class="mt-4">🟢 Chantiers à venir</h2>
+        <div class="row">
+            {% for chantier in chantiers_a_venir %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ chantier.nom }}</h5>
+                            <p class="card-text">
+                                <strong>Adresse :</strong> {{ chantier.adresse }}<br>
+                                <strong>Date prévue :</strong> {{ chantier.plannings[0].date|date('d/m/Y') }}
+                            </p>
+                            <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}" class="btn btn-outline-success btn-sm">Voir détail</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if chantiers_passes is not empty %}
+        <h2 class="mt-5">🔴 Chantiers passés</h2>
+        <div class="row">
+            {% for chantier in chantiers_passes %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-secondary">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ chantier.nom }}</h5>
+                            <p class="card-text">
+                                <strong>Adresse :</strong> {{ chantier.adresse }}<br>
+                                <strong>Date :</strong> {{ chantier.plannings[0].date|date('d/m/Y') }}
+                            </p>
+                            <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}" class="btn btn-outline-secondary btn-sm">Voir détail</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
