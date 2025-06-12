@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma fiche personnelle{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Ma fiche personnelle</h1>
+
+    {% if personnel %}
+        <table class="table table-bordered">
+            <tr>
+                <th>Nom</th>
+                <td>{{ personnel.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ personnel.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Poste</th>
+                <td>{{ personnel.poste }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ personnel.email }}</td>
+            </tr>
+            <!-- Ajoute ici d'autres infos si besoin -->
+        </table>
+    {% else %}
+        <div class="alert alert-warning">Aucune fiche liée à votre compte.</div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -56,6 +56,7 @@ class UserController extends AbstractController
 
         return $this->render('user/planning.html.twig', [
             'plannings' => $plannings,
+            'now' => new \DateTime(),
         ]);
     }
 
@@ -107,3 +108,4 @@ class UserController extends AbstractController
         ]);
     }
 }
+ 

@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Personnel{% endblock %}
-
 {% block body %}
-    <h1>Edit Personnel</h1>
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="mb-4">Ajouter un personnel</h2>
 
-    {{ include('personnel/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_personnel_index') }}">back to list</a>
-
-    {{ include('personnel/_delete_form.html.twig') }}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

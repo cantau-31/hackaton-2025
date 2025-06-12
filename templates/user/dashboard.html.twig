@@ -1,44 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}Tableau de bord Utilisateur{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1 class="text-center mb-5">Bienvenue sur votre espace</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">👋 Bienvenue, {{ personnel.prenom }}</h1>
 
-    <div class="row g-4">
-        <!-- Fiche Personnel -->
+    <p><strong>Rôle :</strong> {{ app.user.roles[0] }}</p>
+
+    <div class="row">
         <div class="col-md-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Ma fiche personnel</h5>
-                    <p class="card-text">Voir vos informations personnelles</p>
-                    <a href="{{ path('user_fiche') }}" class="btn btn-primary">Accéder</a>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">📅 Mon Planning</h5>
+                    <p class="card-text">Consulte ton planning à jour avec les dates, horaires et chantiers associés.</p>
+                    <a href="{{ path('user_planning') }}" class="btn btn-primary btn-sm">Voir mon planning</a>
                 </div>
             </div>
         </div>
 
-        <!-- Planning -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Mon planning</h5>
-                    <p class="card-text">Voir vos horaires de travail</p>
-                    <a href="{{ path('user_planning') }}" class="btn btn-success">Accéder</a>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">📋 Ma fiche personnel</h5>
+                    <p class="card-text">Consulte tes informations personnelles et professionnelles enregistrées.</p>
+                    <a href="{{ path('user_fiche') }}" class="btn btn-secondary btn-sm">Voir ma fiche</a>
                 </div>
             </div>
         </div>
 
-        <!-- Chantiers -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Mes chantiers</h5>
-                    <p class="card-text">Consulter la liste des chantiers</p>
-                    <a href="{{ path('user_chantiers') }}" class="btn btn-warning">Accéder</a>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">🏗️ Mes Chantiers</h5>
+                    <p class="card-text">Accède aux chantiers auxquels tu es assigné, à venir ou déjà passés.</p>
+                    <a href="{{ path('user_chantiers') }}" class="btn btn-success btn-sm">Voir mes chantiers</a>
                 </div>
             </div>
         </div>
     </div>
+
+    {% if plannings is defined and plannings is not empty %}
+        <h3 class="mt-5">📌 Prochains Plannings</h3>
+        <ul class="list-group">
+            {% for planning in plannings %}
+                <li class="list-group-item">
+                    📍 Chantier : <strong>{{ planning.chantier.nom }}</strong><br>
+                    🗓️ Le {{ planning.date|date('d/m/Y') }} à {{ planning.heure|date('H:i') }}<br>
+                    👷 Chef de chantier : {{ planning.chefChantier }}
+                </li>
+            {% else %}
+                <li class="list-group-item">Aucun planning à venir.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 {% endblock %}
