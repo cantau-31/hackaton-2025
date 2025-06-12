@@ -21,9 +21,16 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $personnel = $user?->getPersonnel();
 
-        $plannings = $personnel
-            ? $planningRepository->findBy(['personnel' => $personnel])
-            : [];
+        $plannings = [];
+
+        if ($personnel) {
+            $plannings = $planningRepository->createQueryBuilder('p')
+                ->leftJoin('p.employes', 'e')
+                ->where('e = :personnel')
+                ->setParameter('personnel', $personnel)
+                ->getQuery()
+                ->getResult();
+        }
 
         return $this->render('user/dashboard.html.twig', [
             'plannings' => $plannings,
@@ -36,9 +43,16 @@ class UserController extends AbstractController
     {
         $personnel = $this->getUser()?->getPersonnel();
 
-        $plannings = $personnel
-            ? $planningRepository->findBy(['personnel' => $personnel])
-            : [];
+        $plannings = [];
+
+        if ($personnel) {
+            $plannings = $planningRepository->createQueryBuilder('p')
+                ->leftJoin('p.employes', 'e')
+                ->where('e = :personnel')
+                ->setParameter('personnel', $personnel)
+                ->getQuery()
+                ->getResult();
+        }
 
         return $this->render('user/planning.html.twig', [
             'plannings' => $plannings,
@@ -64,7 +78,13 @@ class UserController extends AbstractController
         $chantiersPasses = [];
 
         if ($personnel) {
-            $plannings = $planningRepository->findBy(['personnel' => $personnel]);
+            $plannings = $planningRepository->createQueryBuilder('p')
+                ->leftJoin('p.employes', 'e')
+                ->where('e = :personnel')
+                ->setParameter('personnel', $personnel)
+                ->getQuery()
+                ->getResult();
+
             $now = new \DateTime();
 
             foreach ($plannings as $planning) {
